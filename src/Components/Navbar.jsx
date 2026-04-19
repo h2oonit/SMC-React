@@ -6,7 +6,6 @@ import Home from "../pages/Home";
 
 const Navbar = () => {
 	const navigate = useNavigate();
-	const [searchValue, setSearchValue] = useState();
 
 	function searchMovies() {
 		console.log(searchValue)
@@ -35,7 +34,7 @@ const Navbar = () => {
 									maxLength="30"
 									placeholder="Search"
 									onChange={(event) => setSearchValue(event.target.value)}
-									onKeyDown={(event) => event.key === "Enter" ? <Home searchValue={searchValue}/> && searchMovies(): null}
+									onKeyDown={(event) => event.key === "Enter" ? searchMovies: null}
 									
 									required
 								/>

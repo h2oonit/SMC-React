@@ -85,6 +85,8 @@ const Home = (searchValue) => {
 		const moviesDataSearch = [].concat(moviesData1.Search, moviesData2.Search);
 
 		setMovieGallery(moviesDataSearch);
+
+		console.log(searchValue)
 	}
 
 	// // SEARCH MOVIES
