@@ -105,6 +105,7 @@ button:active {
 
 .logo__img {
     width: 90px;
+    cursor: pointer;
 }
 
 .nav__container {
@@ -572,12 +573,17 @@ button:active {
 /* FOOTER */
 
 #footer {
+    position: absolute;
+    width: 100%;
     height: 30vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: radial-gradient(circle at top, #3b0c4d 0%, #000000 100%);
+    z-index: 10;
 }
+
+
 
 .footer__logo {
     display: flex;
@@ -595,6 +601,7 @@ button:active {
 .footer__link {
     font-size: 20px;
     margin: 0 16px;
+    cursor: pointer;
 }
 
 

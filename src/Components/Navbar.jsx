@@ -1,16 +1,29 @@
-import React from "react";
-import logo from './assets/SMC.png'
+import React, { useState } from "react";
+import logo from '../assets/SMC.png'
+import { useNavigate } from "react-router-dom";
+import Home from "../pages/Home";
 
 
 const Navbar = () => {
+	const navigate = useNavigate();
+	const [searchValue, setSearchValue] = useState();
+
+	function searchMovies() {
+		console.log(searchValue)
+	}
+
+	
 	return (
 		<>
+			
 			<nav className="nav">
 				<div className="container nav__container">
 					<div className="row nav__row">
 						<div className="logo">
 							<figure className="logo__wrapper">
-								<img src={logo} alt="" className="logo__img" />
+								<img src={logo} alt="" className="logo__img" 
+								onClick={() => navigate('/')}
+								/>
 							</figure>
 						</div>
 						<div className="nav__contents">
@@ -21,15 +34,15 @@ const Navbar = () => {
 									className="search--bar"
 									maxLength="30"
 									placeholder="Search"
-									// onKeyDown={(event) =>
-									// 	event.key === "Enter" && searchMovies(event)
-									// }
+									onChange={(event) => setSearchValue(event.target.value)}
+									onKeyDown={(event) => event.key === "Enter" ? <Home searchValue={searchValue}/> && searchMovies(): null}
+									
 									required
 								/>
 								<div className="mag__glass">
 									<i
 										className="fas fa-magnifying-glass"
-										// onclick={searchMovies}
+										
 									></i>
 								</div>
 								<div className="search__spinner">
@@ -39,13 +52,13 @@ const Navbar = () => {
 
 							<ul className="nav__link--list">
 								<li className="nav__link">
-									<a href="#best">Featured</a>
+									<a onClick={() => navigate('/')} href="#best">Featured</a>
 								</li>
 								<li className="nav__link">
-									<a href="#movies">Movies</a>
+									<a onClick={() => navigate('/')} href="#movies">Movies</a>
 								</li>
 								<li className="nav__link">
-									<a href="#footer">More</a>
+									<a onClick={() => navigate('/')} href="#footer">More</a>
 								</li>
 							</ul>
 						</div>
