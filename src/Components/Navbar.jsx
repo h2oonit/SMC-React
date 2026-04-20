@@ -32,7 +32,8 @@ const Navbar = ({setSearchValue}) => {
 									placeholder="Search"
 									value={term}
 									onChange={(event) => setTerm(event.target.value)}
-									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term)}
+									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term) && navigate('/')} 
+										
 									
 									required
 								/>

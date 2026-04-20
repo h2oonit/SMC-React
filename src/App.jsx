@@ -15,7 +15,7 @@ function App() {
         <Navbar setSearchValue={setSearchValue}/>
         <Routes>
           <Route path="/" element={<Home searchValue={searchValue}/>} />
-          <Route path="/movie/:imdbID" element={<Movie />} />
+          <Route path="/movie/:imdbID" element={<Movie searchValue={searchValue}/>} />
         </Routes>
         <Footer/>
       </div>

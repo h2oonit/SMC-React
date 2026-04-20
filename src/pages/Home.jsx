@@ -10,10 +10,9 @@ const Home = ({ searchValue }) => {
 	const [chosenMovie, setChosenMovie] = useState([]);
 	const [movieGallery, setMovieGallery] = useState([]);
 	const [loadIndex, setLoadIndex] = useState(3);
+	const [activeSearch, setActiveSearch] = useState("movie");
 	const [loading, setLoading] = useState();
 	const navigate = useNavigate();
-	let lastSearchTerm = null;
-	// MAIN
 
 	useEffect(() => {
 		setLoading(true);
@@ -25,10 +24,12 @@ const Home = ({ searchValue }) => {
 
 	useEffect(() => {
 		if (searchValue) {
-			console.log('worked: ' + searchValue)
+			console.log("worked: " + searchValue);
 			searchMovies(searchValue);
 		}
 	}, [searchValue]);
+
+	// MAIN
 
 	async function main() {
 		let i = 0;
@@ -78,14 +79,27 @@ const Home = ({ searchValue }) => {
 		console.log(chosenMovieId);
 	}
 
+	// // SEARCH MOVIES
+
+	function searchMovies(searchValue) {
+		const movieSection = document.getElementById("movies");
+		setActiveSearch(searchValue);
+		setLoadIndex(3);
+		moviesGallery(searchValue);
+
+		if (movieSection) {
+			movieSection.scrollIntoView({ behavior: "smooth" });
+		}
+	}
+
 	// // MOVIE GALLERY
 
-	async function moviesGallery(lastSearchTerm) {
+	async function moviesGallery() {
 		const moviesPg1 = await axios.get(
-			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${lastSearchTerm || "movie"}&page=1`,
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${searchValue || "movie"}&page=1`,
 		);
 		const moviesPg2 = await axios.get(
-			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${lastSearchTerm || "movie"}&page=2`,
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${searchValue || "movie"}&page=2`,
 		);
 		const moviesData1 = moviesPg1.data;
 		const moviesData2 = moviesPg2.data;
@@ -94,35 +108,22 @@ const Home = ({ searchValue }) => {
 		setMovieGallery(moviesDataSearch);
 	}
 
-	// // SEARCH MOVIES
-
-	function searchMovies(searchValue) {
-		lastSearchTerm = searchValue;
-		const lastSearchTermU =
-			lastSearchTerm.charAt(0).toUpperCase() + lastSearchTerm.slice(1);
-		console.log("you searched: " + lastSearchTermU);
-		moviesGallery(lastSearchTerm)
-		loadMoreMovies(lastSearchTerm)
-	}
-
 	// // LOADING MORE MOVIES
 
-	async function loadMoreMovies(lastSearchTerm) {
-		setLoadIndex((index) => index + 1);
-		const query = lastSearchTerm || "movie";
-		let moviesPg = await axios.get(
-			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${query}&page=${loadIndex}`,
+	async function loadMoreMovies() {
+		const moviesPg = await axios.get(
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${activeSearch}&page=${loadIndex}`,
 		);
-
 		const moviesData = moviesPg.data.Search;
 
 		if (loadIndex > 2 && loadIndex !== 10) {
 			setMovieGallery((movieGallery) => [...movieGallery, ...moviesData]);
+			setLoadIndex((index) => index + 1);
 		} else if (loadIndex >= 10) {
 			alert("No more movies to load!");
 			loadIndex = 10;
 		}
-		console.log('load more: ' + query);
+		console.log("load more: " + activeSearch);
 	}
 
 	return (
@@ -201,18 +202,16 @@ const Home = ({ searchValue }) => {
 								</div>
 							))}
 						</div>
-						<a href="#movie__info">
-							<button
-								className="button best__movies--button"
-								onClick={
-									chosenMovie.length !== 0
-										? () => navigate(`/movie/${chosenMovie}`)
-										: undefined
-								}
-							>
-								Select Movie
-							</button>
-						</a>
+						<button
+							className="button best__movies--button"
+							onClick={
+								chosenMovie.length !== 0
+									? () => navigate(`/movie/${chosenMovie}`)
+									: undefined
+							}
+						>
+							Select Movie
+						</button>
 					</div>
 				</div>
 			</section>
@@ -229,28 +228,26 @@ const Home = ({ searchValue }) => {
 						</div>
 						<div className="movies__dividor"></div>
 						<div className="movies__search--result">
-							<p className="search__result"></p>
+							<p className="search__result">You Search: {activeSearch}</p>
 						</div>
 						<div className="movies__gallery">
 							{movieGallery.map((movie) => (
 								<div className="gallery__movie" key={movie.imdbID}>
 									<figure className="gallery__movie--wrapper">
-										<a href="#movie__info">
-											<img
-												src={movie.Poster}
-												className="gallery__movie--img"
-												alt=""
-												onClick={() => {
-													movieChosen(movie);
-													if (
-														chosenMovie.length !== 0 &&
-														chosenMovie === movie.imdbID
-													) {
-														navigate(`/movie/${chosenMovie}`);
-													}
-												}}
-											/>
-										</a>
+										<img
+											src={movie.Poster}
+											className="gallery__movie--img"
+											alt=""
+											onClick={() => {
+												movieChosen(movie);
+												if (
+													chosenMovie.length !== 0 &&
+													chosenMovie === movie.imdbID
+												) {
+													navigate(`/movie/${chosenMovie}`);
+												}
+											}}
+										/>
 									</figure>
 								</div>
 							))}

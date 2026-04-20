@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../Css/Movie.css";
 
-const Movie = () => {
+const Movie = ({searchValue}) => {
 	const navigate = useNavigate();
 	const { imdbID } = useParams();
 	const [movieInfo, setMovieInfo] = useState(null);
@@ -24,8 +24,18 @@ const Movie = () => {
 	}
 
 	useEffect(() => {
+		const movieSection = document.getElementById("movie__info");
 		getMovieInfo(imdbID);
+        if (movieSection) {
+            movieSection.scrollIntoView({ behavior: "smooth" });
+        }
 	}, []);
+
+	useEffect(() => {
+		if (searchValue) {
+			navigate('/')
+		}
+	},[searchValue])
 
 	return (
 		<>
@@ -39,7 +49,7 @@ const Movie = () => {
 					<div className="movie__info--row">
 						<button
 							className="button movie__back--button"
-							onClick={() => navigate("/")}
+							onClick={() => navigate(-2)}
 						>
 							Back
 						</button>
