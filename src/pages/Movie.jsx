@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "../Css/Movie.css";
 
-const Movie = ({searchValue}) => {
+const Movie = ({searchValue, entered, setEntered}) => {
 	const navigate = useNavigate();
 	const { imdbID } = useParams();
 	const [movieInfo, setMovieInfo] = useState(null);
@@ -18,11 +18,11 @@ const Movie = ({searchValue}) => {
 		setMovieInfo(data);
 		let movieMins = parseInt(data?.Runtime) % 60;
 		let movieHours = Math.floor(parseInt(data?.Runtime) / 60);
-		console.log(movieHours, movieMins);
+		console.log(movieHours + ' Hr', movieMins + ' Mins');
 		setMovieMins(movieMins);
 		setMovieHours(movieHours);
 	}
-
+	
 	useEffect(() => {
 		const movieSection = document.getElementById("movie__info");
 		getMovieInfo(imdbID);
@@ -30,12 +30,24 @@ const Movie = ({searchValue}) => {
             movieSection.scrollIntoView({ behavior: "smooth" });
         }
 	}, []);
+	
+	// useEffect(() => {
+		
+	// },[imdbID])
 
 	useEffect(() => {
-		if (searchValue) {
+		if (searchValue && entered === 'Enter') {
+			setEntered('')
 			navigate('/')
 		}
+		else if(searchValue) {
+			console.log('no enter')
+		}
+		else {
+			console.log('cant')
+		}
 	},[searchValue])
+	
 
 	return (
 		<>
@@ -49,7 +61,7 @@ const Movie = ({searchValue}) => {
 					<div className="movie__info--row">
 						<button
 							className="button movie__back--button"
-							onClick={() => navigate(-2)}
+							onClick={() => (navigate('/'), navigate(-2))}
 						>
 							Back
 						</button>

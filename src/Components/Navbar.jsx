@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import logo from '../assets/SMC.png'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Home from "../pages/Home";
 
 
-const Navbar = ({setSearchValue}) => {
+const Navbar = ({setSearchValue, setEntered}) => {
 	const navigate = useNavigate();
+	const { imdbID } = useParams();
+	const enter = true
 	const [term, setTerm] = useState('')
-
 	
 	return (
 		<>
@@ -32,9 +33,8 @@ const Navbar = ({setSearchValue}) => {
 									placeholder="Search"
 									value={term}
 									onChange={(event) => setTerm(event.target.value)}
-									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term) && navigate('/')} 
+									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term) && setEntered('Enter')}
 										
-									
 									required
 								/>
 								<div className="mag__glass">

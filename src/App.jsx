@@ -8,14 +8,15 @@ import { useState } from 'react';
 
 function App() {
   const [searchValue, setSearchValue] = useState();
+  const [entered, setEntered] = useState(false);
 
 	return (
     <Router>
       <div className="App">
-        <Navbar setSearchValue={setSearchValue}/>
+        <Navbar setSearchValue={setSearchValue} setEntered={setEntered}/>
         <Routes>
           <Route path="/" element={<Home searchValue={searchValue}/>} />
-          <Route path="/movie/:imdbID" element={<Movie searchValue={searchValue}/>} />
+          <Route path="/movie/:imdbID" element={<Movie searchValue={searchValue} entered={entered} setEntered={setEntered}/>} />
         </Routes>
         <Footer/>
       </div>
