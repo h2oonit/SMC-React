@@ -25,7 +25,7 @@ const Home = ({ searchValue }) => {
 
 	useEffect(() => {
 		if (searchValue) {
-			console.log('worked')
+			console.log('worked: ' + searchValue)
 			searchMovies(searchValue);
 		}
 	}, [searchValue]);
@@ -92,8 +92,6 @@ const Home = ({ searchValue }) => {
 		const moviesDataSearch = [].concat(moviesData1.Search, moviesData2.Search);
 
 		setMovieGallery(moviesDataSearch);
-
-		console.log(lastSearchTerm);
 	}
 
 	// // SEARCH MOVIES
@@ -103,15 +101,15 @@ const Home = ({ searchValue }) => {
 		const lastSearchTermU =
 			lastSearchTerm.charAt(0).toUpperCase() + lastSearchTerm.slice(1);
 		console.log("you searched: " + lastSearchTermU);
-		moviesGallery(lastSearchTerm);
-		loadMoreMovies(lastSearchTerm);
+		moviesGallery(lastSearchTerm)
+		loadMoreMovies(lastSearchTerm)
 	}
 
 	// // LOADING MORE MOVIES
 
-	async function loadMoreMovies(searchValue) {
+	async function loadMoreMovies(lastSearchTerm) {
 		setLoadIndex((index) => index + 1);
-		const query = searchValue || lastSearchTerm || "movie";
+		const query = lastSearchTerm || "movie";
 		let moviesPg = await axios.get(
 			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${query}&page=${loadIndex}`,
 		);
@@ -124,7 +122,7 @@ const Home = ({ searchValue }) => {
 			alert("No more movies to load!");
 			loadIndex = 10;
 		}
-		console.log(movieGallery, loadIndex);
+		console.log('load more: ' + query);
 	}
 
 	return (

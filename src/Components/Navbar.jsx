@@ -4,15 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Home from "../pages/Home";
 
 
-const Navbar = ({setSearchValue, searchValue}) => {
+const Navbar = ({setSearchValue}) => {
 	const navigate = useNavigate();
-	const searchInput = null;
-
-	function searchMovies(input) {
-		const searchInput = input;
-		console.log(searchInput)
-		return searchInput;
-	}
+	const [term, setTerm] = useState('')
 
 	
 	return (
@@ -36,8 +30,9 @@ const Navbar = ({setSearchValue, searchValue}) => {
 									className="search--bar"
 									maxLength="30"
 									placeholder="Search"
-									onChange={(event) => searchMovies(event.target.value)}
-									onKeyDown={(event) => event.key === "Enter" ? setSearchValue(searchInput): null}
+									value={term}
+									onChange={(event) => setTerm(event.target.value)}
+									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term)}
 									
 									required
 								/>
