@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const Home = (searchValue) => {
+const Home = ({searchValue}) => {
 	const [movieCurrentLink, setMovieCurrentLink] = useState([]);
 	const [bestMovies, setBestMovies] = useState([]);
 	const [topTenBkgd, setTopTenBkgd] = useState([]);
@@ -73,12 +73,12 @@ const Home = (searchValue) => {
 
 	// // MOVIE GALLERY
 
-	async function moviesGallery() {
+	async function moviesGallery(lastSearchTerm) {
 		const moviesPg1 = await axios.get(
-			"https://www.omdbapi.com/?apikey=6e82b9d2&s=movie&page=1",
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${lastSearchTerm || 'movie'}&page=1`,
 		);
 		const moviesPg2 = await axios.get(
-			"https://www.omdbapi.com/?apikey=6e82b9d2&s=movie&page=2",
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${lastSearchTerm || 'movie'}&page=2`,
 		);
 		const moviesData1 = moviesPg1.data;
 		const moviesData2 = moviesPg2.data;
@@ -86,7 +86,7 @@ const Home = (searchValue) => {
 
 		setMovieGallery(moviesDataSearch);
 
-		console.log(searchValue)
+		console.log(lastSearchTerm)
 	}
 
 	// // SEARCH MOVIES
@@ -96,6 +96,8 @@ const Home = (searchValue) => {
 		const lastSearchTermU =
 			lastSearchTerm.charAt(0).toUpperCase() + lastSearchTerm.slice(1);
 		console.log("you searched: " + lastSearchTermU);
+		moviesGallery(lastSearchTerm);
+		loadMoreMovies(lastSearchTerm)
 	}
 
 	// // LOADING MORE MOVIES
@@ -111,7 +113,7 @@ const Home = (searchValue) => {
 
 		if (loadIndex > 2 && loadIndex !== 10) {
 			setMovieGallery((movieGallery) => [...movieGallery, ...moviesData]);
-		} else if (loadIndex > 10) {
+		} else if (loadIndex >= 10) {
 			alert("No more movies to load!");
 			loadIndex = 10;
 		}

@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Home from "../pages/Home";
 
 
-const Navbar = () => {
+const Navbar = ({setSearchValue, SearchValue}) => {
 	const navigate = useNavigate();
 
 	function searchMovies() {
-		console.log(searchValue)
 	}
 
 	
