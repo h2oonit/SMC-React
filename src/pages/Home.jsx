@@ -67,7 +67,6 @@ const Home = ({ searchValue }) => {
 			"https://www.omdbapi.com/?apikey=6e82b9d2&s=last",
 		);
 		const moviesDataSearch = data.Search;
-		console.log(moviesDataSearch);
 
 		setBestMovies(moviesDataSearch);
 		setTopTenBkgd(moviesDataSearch[0].Poster);
@@ -76,7 +75,6 @@ const Home = ({ searchValue }) => {
 	function movieChosen(movie) {
 		const chosenMovieId = movie.imdbID;
 		setChosenMovie(chosenMovieId);
-		console.log(chosenMovieId);
 	}
 
 	// // SEARCH MOVIES
@@ -88,13 +86,14 @@ const Home = ({ searchValue }) => {
 		moviesGallery(searchValue);
 
 		if (movieSection) {
-			movieSection.scrollIntoView({ behavior: "smooth" });
+			movieSection.scrollIntoView({ behavior: "instant" });
 		}
 	}
 
 	// // MOVIE GALLERY
 
 	async function moviesGallery() {
+		setLoading(true);
 		const moviesPg1 = await axios.get(
 			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${searchValue || "movie"}&page=1`,
 		);
@@ -106,6 +105,7 @@ const Home = ({ searchValue }) => {
 		const moviesDataSearch = [].concat(moviesData1.Search, moviesData2.Search);
 
 		setMovieGallery(moviesDataSearch);
+		setLoading(false);
 	}
 
 	// // LOADING MORE MOVIES
@@ -226,9 +226,23 @@ const Home = ({ searchValue }) => {
 								Find your next favorite movie!
 							</h2>
 						</div>
-						<div className="movies__dividor"></div>
+						<div
+							className={
+								searchValue
+									? "movies__dividor movies__dividor--small"
+									: "movies__dividor"
+							}
+						></div>
 						<div className="movies__search--result">
-							<p className="search__result">You Search: {activeSearch}</p>
+							<p
+								className={
+									searchValue
+										? "search__result search__result--visible"
+										: "search__result"
+								}
+							>
+								Results found for "{activeSearch}"
+							</p>
 						</div>
 						<div className="movies__gallery">
 							{movieGallery.map((movie) => (
@@ -236,16 +250,15 @@ const Home = ({ searchValue }) => {
 									<figure className="gallery__movie--wrapper">
 										<img
 											src={movie.Poster}
-											className="gallery__movie--img"
+											className={
+												!loading
+													? "gallery__movie--img"
+													: "gallery__movie--img movie__img--loading"
+											}
 											alt=""
 											onClick={() => {
 												movieChosen(movie);
-												if (
-													chosenMovie.length !== 0 &&
-													chosenMovie === movie.imdbID
-												) {
-													navigate(`/movie/${chosenMovie}`);
-												}
+												navigate(`/movie/${movie.imdbID}`);
 											}}
 										/>
 									</figure>

@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import logo from '../assets/SMC.png'
-import { useNavigate, useParams } from "react-router-dom";
-import Home from "../pages/Home";
+import { useNavigate } from "react-router-dom";
 
 
-const Navbar = ({setSearchValue, setEntered}) => {
+const Navbar = ({setSearchValue}) => {
 	const navigate = useNavigate();
-	const { imdbID } = useParams();
-	const enter = true
 	const [term, setTerm] = useState('')
 	
 	return (
@@ -33,7 +30,12 @@ const Navbar = ({setSearchValue, setEntered}) => {
 									placeholder="Search"
 									value={term}
 									onChange={(event) => setTerm(event.target.value)}
-									onKeyDown={(event) => event.key === "Enter" && setSearchValue(term) && setEntered('Enter')}
+									onKeyDown={(event) => {
+										if (event.key === "Enter") {
+											setSearchValue(term);
+											navigate("/");
+										}
+									}}
 										
 									required
 								/>
@@ -49,14 +51,14 @@ const Navbar = ({setSearchValue, setEntered}) => {
 							</div>
 
 							<ul className="nav__link--list">
-								<li className="nav__link">
+								<li className="nav__link link__hover-effect">
 									<a onClick={() => navigate('/')} href="#best">Featured</a>
 								</li>
-								<li className="nav__link">
+								<li className="nav__link link__hover-effect">
 									<a onClick={() => navigate('/')} href="#movies">Movies</a>
 								</li>
-								<li className="nav__link">
-									<a onClick={() => navigate('/')} href="#footer">More</a>
+								<li className="nav__link link__hover-effect">
+									<a href="#footer">More</a>
 								</li>
 							</ul>
 						</div>

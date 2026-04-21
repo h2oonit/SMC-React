@@ -1,56 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../Css/Movie.css";
+import { Helmet } from "react-helmet-async";
 
-const Movie = ({searchValue, entered, setEntered}) => {
+
+const Movie = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const { imdbID } = useParams();
 	const [movieInfo, setMovieInfo] = useState(null);
 	const [movieMins, setMovieMins] = useState(null);
 	const [movieHours, setMovieHours] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	async function getMovieInfo(imdbID) {
+		setLoading(true);
 		const { data } = await axios.get(
 			`https://www.omdbapi.com/?apikey=6e82b9d2&i=${imdbID}`,
 		);
-		console.log(data);
 		setMovieInfo(data);
 		let movieMins = parseInt(data?.Runtime) % 60;
 		let movieHours = Math.floor(parseInt(data?.Runtime) / 60);
-		console.log(movieHours + ' Hr', movieMins + ' Mins');
 		setMovieMins(movieMins);
 		setMovieHours(movieHours);
+		setLoading(false);
 	}
-	
-	useEffect(() => {
-		const movieSection = document.getElementById("movie__info");
-		getMovieInfo(imdbID);
-        if (movieSection) {
-            movieSection.scrollIntoView({ behavior: "smooth" });
-        }
-	}, []);
-	
-	// useEffect(() => {
-		
-	// },[imdbID])
 
 	useEffect(() => {
-		if (searchValue && entered === 'Enter') {
-			setEntered('')
-			navigate('/')
+		getMovieInfo(imdbID);
+	}, [imdbID]);
+
+	useEffect(() => {
+		const movieSection = document.getElementById("movie__info");
+		if (movieSection) {
+			movieSection.scrollIntoView({ behavior: "instant" });
 		}
-		else if(searchValue) {
-			console.log('no enter')
-		}
-		else {
-			console.log('cant')
-		}
-	},[searchValue])
-	
+	})
 
 	return (
 		<>
+			<Helmet>
+				<title>{`SMC - ${movieInfo?.Title}`}</title>
+			</Helmet>
 			<section id="movie__info">
 				<div className="movie__info--container">
 					<img
@@ -61,7 +53,7 @@ const Movie = ({searchValue, entered, setEntered}) => {
 					<div className="movie__info--row">
 						<button
 							className="button movie__back--button"
-							onClick={() => (navigate('/'), navigate(-2))}
+							onClick={() => (navigate("/"), navigate(-2))}
 						>
 							Back
 						</button>
@@ -74,32 +66,72 @@ const Movie = ({searchValue, entered, setEntered}) => {
 								/>
 							</div>
 							<div className="movie__details">
-								<h1 className="movie__title">{movieInfo?.Title}</h1>
+								<h1 className="movie__title">
+									{!loading ? (
+										movieInfo?.Title
+									) : (
+										<div className="loading__bar--title" />
+									)}
+								</h1>
 								<div className="movie__info--dividor"></div>
-								<p className="movie__plot">{movieInfo?.Plot}</p>
+								<p className="movie__plot">
+									{!loading ? (
+										movieInfo?.Plot
+									) : (
+										<div className="loading__bar--plot" />
+									)}
+								</p>
 								<p className="movie__genre">
-									<span>Genre: </span>
-									{movieInfo?.Genre}
+									<span>Genre: &nbsp;</span>
+									{!loading ? (
+										movieInfo?.Genre
+									) : (
+										<div className="loading__bar" />
+									)}
 								</p>
 								<p className="movie__rated">
-									<span>Rated: </span>
-									{movieInfo?.Rated}
+									<span>Rated: &nbsp;</span>
+									{!loading ? (
+										movieInfo?.Rated
+									) : (
+										<div className="loading__bar" />
+									)}
 								</p>
-								<p className="movie__year">Year Released: {movieInfo?.Year}</p>
+								<p className="movie__year">
+									Year Released:&nbsp;
+									{!loading ? (
+										movieInfo?.Year
+									) : (
+										<div className="loading__bar" />
+									)}
+								</p>
 								<p className="movie__director">
-									<span>Director: </span>
-									{movieInfo?.Director}
+									<span>Director: &nbsp;</span>
+									{!loading ? (
+										movieInfo?.Director
+									) : (
+										<div className="loading__bar" />
+									)}
 								</p>
 								<p className="movie__actors">
-									<span>Actors: </span>
-									{movieInfo?.Actors}
+									<span>Actors: &nbsp;</span>
+									{!loading ? (
+										movieInfo?.Actors
+									) : (
+										<div className="loading__bar" />
+									)}
 								</p>
-								{movieInfo?.Type !== "series" ? (
-									<p className="movie__runtime">
-										<span>Runtime: </span>
-										{movieHours} hr {movieMins} min
-									</p>
-								) : null}
+
+								{!loading ? (
+									movieInfo?.Type !== "series" ? (
+										<p className="movie__runtime">
+											<span>Runtime: &nbsp;</span>
+											{movieHours} hr {movieMins} min
+										</p>
+									) : null
+								) : (
+									<div className="loading__bar" />
+								)}
 							</div>
 						</div>
 					</div>
