@@ -116,12 +116,12 @@ const Home = ({ searchValue }) => {
 		);
 		const moviesData = moviesPg.data.Search;
 
-		if (loadIndex > 2 && loadIndex !== 10) {
+		if (loadIndex > 2 && loadIndex !== 15) {
 			setMovieGallery((movieGallery) => [...movieGallery, ...moviesData]);
 			setLoadIndex((index) => index + 1);
-		} else if (loadIndex >= 10) {
+		} else if (loadIndex >= 15) {
 			alert("No more movies to load!");
-			loadIndex = 10;
+			setLoadIndex(15)
 		}
 		console.log("load more: " + activeSearch);
 	}

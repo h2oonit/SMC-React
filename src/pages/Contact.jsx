@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../Css/Contact.css";
 import logo from "../assets/SMC.png";
 import pfp from "../assets/MyPfp.jpeg";
+import { Helmet } from "react-helmet-async";
 
 const Contact = () => {
 	const navigate = useNavigate();
@@ -16,6 +17,11 @@ const Contact = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>
+					SMC - Contact Page
+				</title>
+			</Helmet>
 			<section id="contact">
 				<div className="contact__container">
 					<div className="contact__row">
@@ -55,6 +61,9 @@ const Contact = () => {
                                 <p className="contact__desc--email">
                                     My email is superbsparo@gmail.com
                                 </p>
+								<p className="contact__desc--invite">
+									If you like this project send me an email
+								</p>
 
 							</div>
 						</div>

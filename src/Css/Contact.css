@@ -121,7 +121,8 @@ p {
 
 .contact__desc--para,
 .contact__desc--intro,
-.contact__desc--email {
+.contact__desc--email,
+.contact__desc--invite {
     font-family: 'Aldrich', sans-serif;
 
 }
