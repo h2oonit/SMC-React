@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate } from "react-router-dom";
 import NotFound from "../Components/NotFound";
 
 const Home = ({ searchValue }) => {
@@ -11,6 +11,7 @@ const Home = ({ searchValue }) => {
 	const [movieGallery, setMovieGallery] = useState([]);
 	const [loadIndex, setLoadIndex] = useState(3);
 	const [activeSearch, setActiveSearch] = useState("movie");
+	const [brokenImages, setBrokenImages] = useState([]);
 	const [loading, setLoading] = useState();
 	const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ const Home = ({ searchValue }) => {
 	// MOVIES GALLERY //
 
 	async function moviesGallery() {
-		console.log(searchValue)
+		console.log(searchValue);
 		setLoading(true);
 		const moviesPg1 = await axios.get(
 			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${searchValue || "movie"}&page=1`,
@@ -85,9 +86,9 @@ const Home = ({ searchValue }) => {
 		const moviesData1 = moviesPg1.data;
 		const moviesData2 = moviesPg2.data;
 		const moviesDataSearch = [].concat(moviesData1.Search, moviesData2.Search);
+
 		console.log(moviesDataSearch);
 		setMovieGallery(moviesDataSearch);
-			
 
 		setLoading(false);
 	}
@@ -109,7 +110,7 @@ const Home = ({ searchValue }) => {
 
 	async function loadMoreMovies() {
 		const moviesPg = await axios.get(
-			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${activeSearch || 'movie'}&page=${loadIndex}`,
+			`https://www.omdbapi.com/?apikey=6e82b9d2&s=${activeSearch || "movie"}&page=${loadIndex}`,
 		);
 		const moviesData = moviesPg.data.Search;
 
@@ -119,11 +120,13 @@ const Home = ({ searchValue }) => {
 		} else if (loadIndex >= 15) {
 			alert("No more movies to load!");
 			setLoadIndex(15);
-		}
-		else {
+		} else {
 			alert("Nothing to load");
 		}
 	}
+
+	console.log(movieGallery);
+	console.log(brokenImages);
 
 	return (
 		<>
@@ -246,7 +249,13 @@ const Home = ({ searchValue }) => {
 						</div>
 						<div className="movies__gallery">
 							{movieGallery
-								?.filter((movie) => movie && movie.Poster !== "N/A")
+								?.filter(
+									(movie) =>
+										movie &&
+										movie.Poster &&
+										movie.Poster !== "N/A" &&
+										!brokenImages.includes(movie.imdbID),
+								)
 								.map((movie) => (
 									<div className="gallery__movie" key={movie.imdbID}>
 										<figure className="gallery__movie--wrapper">
@@ -256,6 +265,10 @@ const Home = ({ searchValue }) => {
 													!loading
 														? "gallery__movie--img"
 														: "gallery__movie--img movie__img--loading"
+												}
+												onError={() => 
+													setBrokenImages(prev => [
+													...prev, movie.imdbID])
 												}
 												alt=""
 												onClick={() => {

@@ -36,8 +36,7 @@ const Navbar = ({setSearchValue}) => {
 											navigate("/");
 										}
 										else if(event.key === "Enter" && term === '') {
-											setSearchValue();
-											navigate("/");
+											window.location.reload();
 										}
 									}}
 										
