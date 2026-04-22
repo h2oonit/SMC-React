@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet-async";
 
 const Movie = () => {
 	const navigate = useNavigate();
-	const location = useLocation();
 	const { imdbID } = useParams();
 	const [movieInfo, setMovieInfo] = useState(null);
 	const [movieMins, setMovieMins] = useState(null);

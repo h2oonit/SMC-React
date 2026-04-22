@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = ({ searchValue }) => {
 	const [movieCurrentLink, setMovieCurrentLink] = useState([]);
 	const [bestMovies, setBestMovies] = useState([]);
 	const [topTenBkgd, setTopTenBkgd] = useState([]);
-	const [topTenImdbIDs, setTopTenImdbIDs] = useState([]);
 	const [chosenMovie, setChosenMovie] = useState([]);
 	const [movieGallery, setMovieGallery] = useState([]);
 	const [loadIndex, setLoadIndex] = useState(3);
@@ -61,7 +60,6 @@ const Home = ({ searchValue }) => {
 	// TOP 10
 
 	async function topTenMovies() {
-		let i = 0;
 
 		const { data } = await axios.get(
 			"https://www.omdbapi.com/?apikey=6e82b9d2&s=last",
@@ -160,6 +158,7 @@ const Home = ({ searchValue }) => {
 								<img
 									src={movieCurrentLink}
 									className="movie__img--background"
+									alt=""
 								/>
 								<figure className="movie__img--wrapper">
 									<img src={movieCurrentLink} className="movie__img" alt="" />
