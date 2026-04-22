@@ -83,8 +83,9 @@ const Home = ({ searchValue }) => {
     const moviesData1 = moviesPg1.data;
     const moviesData2 = moviesPg2.data;
     const moviesDataSearch = [].concat(moviesData1.Search, moviesData2.Search);
+	console.log(moviesDataSearch)
+	setMovieGallery(moviesDataSearch);
 
-    setMovieGallery(moviesDataSearch);
     setLoading(false);
   }
 
@@ -240,28 +241,35 @@ const Home = ({ searchValue }) => {
             </div>
             <div className="movies__gallery">
               {movieGallery.map((movie) => (
-                <div className="gallery__movie" key={movie.imdbID}>
-                  <figure className="gallery__movie--wrapper">
-                    <img
-                      src={movie.Poster}
-                      className={
-                        !loading
-                          ? "gallery__movie--img"
-                          : "gallery__movie--img movie__img--loading"
-                      }
-                      alt=""
-                      onClick={() => {
-                        movieChosen(movie);
-                        navigate(`/movie/${movie.imdbID}`);
-                      }}
-                    />
-                  </figure>
-                </div>
+				[movie] !== undefined ?
+					movie.Poster !== undefined ?
+						<div className="gallery__movie" key={movie.imdbID}>
+							<figure className="gallery__movie--wrapper">
+								<img
+								src={movie.Poster}
+								className={
+									!loading
+									? "gallery__movie--img"
+									: "gallery__movie--img movie__img--loading"
+								}
+								onError={(e) => {
+									e.currentTarget.style.display = 'none';
+								}}
+								alt=""
+								onClick={() => {
+									movieChosen(movie);
+									navigate(`/movie/${movie.imdbID}`);
+								}}
+								/>
+							</figure>
+						</div>: movie.currentTarget.style.display = 'none'
+					: movie.currentTarget.style.display = 'none'
+
               ))}
             </div>
-            <div className="load__spinner">
+            {/* <div className="load__spinner">
               <i className="fas fa-spinner"></i>
-            </div>
+            </div> */}
             <button
               className="button movies__button"
               onClick={() => loadMoreMovies()}
