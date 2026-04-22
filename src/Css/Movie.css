@@ -18,11 +18,16 @@ p {
 
 .movie__info--container {
     width: 100%;
-    height: 100vh;
+    height: if(
+        media(width > 768px): 100vh;
+        media(width <= 768px): 100%;
+    );
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 20px 40px;
+    padding: if(
+        media(width > 768px): 20px 40px;
+        media(width <= 768px): 20px 16px;
+    );
     background-color: #060602;
 }
 
@@ -39,13 +44,22 @@ p {
 
 .movie__back--button {
     position: absolute;
-    top: 70px;
-    left: 100px;
-    width: 100px;
+    top: 65px;
+    left: if(
+        media(width > 768px): 50px;
+        media(width <= 768px): 0;
+    );
+    width: if(
+        media(width > 576px): 100px;
+        media(width <=576px): 75px;
+    );
     padding: 8px 16px;
     background: transparent;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: if(
+        media(width > 576px): 16px;
+        media(width <= 576px): 12px;
+    );
     transition: all .2s ease;
 }
 
@@ -69,13 +83,21 @@ p {
     height: 95%;
     max-width: 1500px;
     display: flex;
+    flex-direction: if(
+        media(width <= 768px): column;
+    );
     align-items: center;
     justify-content: center;
 }
 
 .movie__poster {
     width: 50%;
-    height: 100%;
+    height: if(
+        media(width > 768px): 100%;
+        media(width <= 768px): 50%;
+    );
+    min-width: 200px;
+    min-height: 275px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,19 +105,38 @@ p {
 
 .movie__poster--img {
     width: 70%;
-    height: 90%;
+    height: 50vw;
+    min-width: 200px;
+    min-height: 300px;
+    max-height: 93%;
     border-radius: 4px;
 }
 
 .movie__details {
-    width: 50%;
-    height: 100%;
+    width: if(
+        media(width > 768px): 50%;
+        media(width <= 768px): 100%;
+    );
+    height: if(
+        media(width >= 768px): 100%;
+        media(width >= 576px): 55%;
+        media(width < 576px): 65%;
+    );
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: if(
+        media(width > 768px): center;
+        media(width <= 768px): space-around;
+    );
     align-items: center;
-    gap: 16px;
-    padding: 0px 40px;
+    gap: if(
+        media(width > 768px): 8px;
+        media(width <= 768px): 4px;
+    );
+    padding: if(
+        media(width > 768px): 24px 40px;
+        media(width <= 768px): 16px 20px;
+    );
     background-color: #0c0b0c;
     border-radius: 12px;
 }
@@ -104,13 +145,22 @@ p {
     width: 100%;
     height: 2px;
     background-color: white;
-    margin-bottom: 40px;
+    margin-bottom: if(
+        media(width > 768px): 8px;
+        media(width <= 768px): 0px;
+    );
 }
 
 .movie__title {
     display: flex;
     justify-content: center;
-    font-size: 64px;
+    font-size: if(
+        media(width >= 1200px): 56px;
+        media(width >= 992px): 48px;
+        media(width >= 576px): 36px;
+        media(width < 576px): 24px;
+        
+    );
     font-weight: 900;
     color: #ffffff;
     text-align: center;
@@ -127,10 +177,22 @@ p {
     display: flex;
     justify-content: center;
     text-align: center;
+    font-size: if(
+        media(width >= 992px): 20px;
+        media(width >= 768px): 16px;
+        media(width >= 576px): 16px;
+        media(width >= 320px): 12px;
+        media(width < 320px): 8px;
+    );
+    margin-bottom: if(
+        media(width >= 1200px): 20px;
+        media(width >= 768px): 8px;
+        media(width >= 576px): 4px;
+       
+    );
 }
 
 .movie__year {
-    font-size: 20px;
     font-weight: 500;
     color: white;
 }

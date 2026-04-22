@@ -208,6 +208,7 @@ button:active {
     position: absolute;
     right: 20px;
     transition: all .2s ease;
+    z-index: 10;
 }
 
 .mag__glass {
@@ -679,11 +680,20 @@ button:active {
 
 /* MEDIA QUERIES */
 
+/* 1200px */
+
+@media (max-width: 1200px) {
+    .title {
+        font-size: 72px;
+    }
+}
+
+
 /* 992px */
 
 @media (max-width: 992px) {
     .title {
-        font-size: 56px;
+        font-size: 48px;
     }
     .sub-title {
         font-size: 28px;
@@ -730,15 +740,22 @@ button:active {
         width: 100%;
     }
     .landing__row {
-        padding: 24px;
+        padding: 70px 24px 24px 24px;
         flex-direction: column;
     }
     .desc{
         width: 100%;
-        padding: 0 40px;
+        height: 50%;
+        padding: 20px 40px 0 40px;
     }
     .showcase__movies--list{
         width: 100%;
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+    }
+    .showcase__movie {
+        padding: 0;
     }
     .title {
         font-size: 40px;
@@ -752,14 +769,11 @@ button:active {
     .desc__para{
         font-size: 16px;
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
     }
     .desc__button--link {
         display: flex;
         justify-content: center;
-    }
-    .desc__button {
-        display: none;
     }
     .showcase__movie {
         padding-top: 0;
@@ -805,23 +819,15 @@ button:active {
     .nav__row {
         padding: 0 24px;
     }
-    .best__movies--title,
     .movies__title {
-        font-size: 28px;
+        font-size: 24px;
     }
-    .best__movies--sub-title {
-        font-size: 20px;
-    }
-    .best__movie {
-        width: 8%;
-    }
-    .best__row,
     .movies__row {
         padding: 16px;
     }
-    .best__movies--dividor,
     .movies__dividor {
-        margin-bottom: 40px;
+        margin-top: 0;
+        margin-bottom: 20px;
     }
     .movies__container {
         padding-top: 28px;
@@ -833,7 +839,7 @@ button:active {
         margin-bottom: 8px;
     }
     .movies__sub-title {
-        display: none;
+        font-size: 16px;
     }
     .footer__container {
         padding-top: 32px;
@@ -845,6 +851,12 @@ button:active {
     .footer__link {
         font-size: 16px;
         margin-bottom: 8px;
+    }
+    .search__result {
+        font-size: 24px;
+    }
+    .desc {
+        padding: 20px 20px 0 20px;
     }
 }
 
@@ -862,8 +874,9 @@ button:active {
         font-size: 32px;
     }
     .sub-title {
-        font-size: 20px;
+        font-size: 16px;
     }
+
     .gallery__movie {
         width: 100%;
     }
@@ -873,8 +886,22 @@ button:active {
     .footer__logo--img {
         width: 100%;
     }
-    .search__result {
+    .movie__title {
+        font-size: 20px;
+    }
+    .movies__sub-title {
+        display: none;
+    }
+}
+
+/* 320px */
+
+@media (max-width: 320px) {
+    .title {
         font-size: 24px;
+    }
+    .desc__button {
+        font-size: 12px;
     }
 }
 
@@ -884,6 +911,9 @@ button:active {
 @media (max-width: 275px) {
     .search__result {
         font-size: 16px;
+    }
+    .desc__para {
+        font-size: 10px;
     }
 }
 

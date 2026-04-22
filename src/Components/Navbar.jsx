@@ -39,15 +39,6 @@ const Navbar = ({setSearchValue}) => {
 										
 									required
 								/>
-								<div className="mag__glass">
-									<i
-										className="fas fa-magnifying-glass"
-										
-									></i>
-								</div>
-								<div className="search__spinner">
-									<i className="fas fa-spinner"></i>
-								</div>
 							</div>
 
 							<ul className="nav__link--list">
