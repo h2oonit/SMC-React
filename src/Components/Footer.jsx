@@ -23,7 +23,7 @@ const Footer = () => {
 						<div className="footer__links">
 							<ul className="footer__link--list">
 								<li className="footer__link footer__link--hover-effect">
-									<a onClick={() => navigate('/')} href="#">Home</a>
+									<a href="#landing" onClick={() => navigate('/')}>Home</a>
 								</li>
 								<li className="footer__link footer__link--hover-effect">
 									<a onClick={() => navigate('/#best')} href="#best">Featured</a>
@@ -32,7 +32,7 @@ const Footer = () => {
 									<a onClick={() => navigate('/#movies')} href='#movies'>Movies</a>
 								</li>
 								<li className="footer__link footer__link--hover-effect">
-									<a onClick={() => navigate('/help')}>Contact</a>
+									<a href="/help" >Contact</a>
 								</li>
 							</ul>
 						</div>

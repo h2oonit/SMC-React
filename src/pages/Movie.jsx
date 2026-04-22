@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "../Css/Movie.css";
 import { Helmet } from "react-helmet-async";
@@ -52,7 +52,7 @@ const Movie = () => {
 					<div className="movie__info--row">
 						<button
 							className="button movie__back--button"
-							onClick={() => (navigate("/"), navigate(-2))}
+							onClick={() => (navigate("/") && navigate(-2))}
 						>
 							Back
 						</button>
