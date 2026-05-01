@@ -26,7 +26,8 @@ p {
     flex-direction: column;
     padding: if(
         media(width > 768px): 20px 40px;
-        media(width <= 768px): 20px 16px;
+        media(width > 320px): 20px 16px;
+        media(width <= 320px): 20px 10px;
     );
     background-color: #060602;
 }
@@ -44,16 +45,24 @@ p {
 
 .movie__back--button {
     position: absolute;
-    top: 65px;
+    top: if(
+        media(width > 400px): 65px;
+        media(width <= 400px): 55px;
+    );
     left: if(
         media(width > 768px): 50px;
-        media(width <= 768px): 0;
+        media(width > 400px): 0;
+        media(width <= 400px): -5px;
     );
     width: if(
         media(width > 576px): 100px;
-        media(width <=576px): 75px;
+        media(width > 400px): 75px;
+        media(width <= 400px): 50px;
     );
-    padding: 8px 16px;
+    padding: if(
+        media(width > 400px): 8px 16px;
+        media(width <= 400px): 4px 0;
+    );
     background: transparent;
     border-radius: 8px;
     font-size: if(
@@ -91,24 +100,56 @@ p {
 }
 
 .movie__poster {
-    width: 50%;
+    width: if(
+        media(width > 768px): 45%;
+        media(width <= 768px): 100%;
+    );
     height: if(
         media(width > 768px): 100%;
         media(width <= 768px): 50%;
     );
-    min-width: 200px;
-    min-height: 275px;
+    min-width: if(
+        media(width > 320px): 250px;
+        media(width <= 320px): 200px;
+    );
+    min-height: if(
+        media(width > 768px): 275px;
+        media(width <= 768px): 40vh;
+    );
+    max-width: if(
+        media(width > 768px): 525px;
+        media(width <= 768px): 50%;
+    );
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: if(
+        media(width > 320px): 16px;
+        media(width <= 320px): 8px;
+    );
+    margin-bottom: if(
+        media(width > 768px): 0;
+        media(width > 350px): 16px;
+        media(width <= 350px): 8px;
+    );
 }
 
 .movie__poster--img {
-    width: 70%;
-    height: 50vw;
-    min-width: 200px;
-    min-height: 300px;
-    max-height: 93%;
+    width: 100%;
+    height: if(
+        media(width > 768px): 50vw;
+        media(width <= 768px): 100%;
+    );
+    min-width: if(
+        media(width > 768px): 200px;
+        media(width <= 768px): 0;
+    );
+    min-height: if(
+        media(width > 768px): 300px;
+        media(width <= 768px): 50vw;
+        media(height <= 768px): 40vh;
+    );
+    max-height: 90%;
     border-radius: 4px;
 }
 
@@ -135,7 +176,8 @@ p {
     );
     padding: if(
         media(width > 768px): 24px 40px;
-        media(width <= 768px): 16px 20px;
+        media(width > 320px): 16px 20px;
+        media(width <= 320px): 16px 10px;
     );
     background-color: #0c0b0c;
     border-radius: 12px;
